@@ -51,7 +51,6 @@ public class LivroController {
     }
 
 
-
     @GetMapping("/deletar/{id:\\d+}")
     public String deletarLivro(@PathVariable Long id) {
         livroService.deletar(id);

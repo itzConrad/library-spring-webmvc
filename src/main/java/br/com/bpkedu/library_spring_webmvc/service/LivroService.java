@@ -16,6 +16,7 @@ public class LivroService {
 
     public List<Livro> listarTodos() {
         return livroRepository.findAll();
+
     }
 
     public Livro buscarPorId(Long id) {

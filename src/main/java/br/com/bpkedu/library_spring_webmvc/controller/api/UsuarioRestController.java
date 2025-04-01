@@ -22,4 +22,6 @@ public class UsuarioRestController {
         return usuarioService.listarTodos();
     }
 
+
+
 }
