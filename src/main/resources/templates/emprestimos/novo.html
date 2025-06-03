@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Novo Empréstimo</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-green-600 mb-8">Registrar Novo Empréstimo</h1>
+
+    <div th:if="${mensagemErro}" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+        <p th:text="${mensagemErro}"></p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <form th:action="@{/emprestimos/salvar}" method="POST">
+            <div class="mb-4">
+                <label for="livroId" class="block text-gray-700 font-semibold mb-2">Livro Disponível</label>
+                <select id="livroId" name="livroId" required
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <option value="">Selecione um livro</option>
+                    <option th:each="livro : ${livrosDisponiveis}"
+                            th:value="${livro.id}"
+                            th:text="${livro.titulo} + ' - ' + ${livro.autor}"></option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="usuarioId" class="block text-gray-700 font-semibold mb-2">Usuário</label>
+                <select id="usuarioId" name="usuarioId" required
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <option value="">Selecione um usuário</option>
+                    <option th:each="usuario : ${usuarios}"
+                            th:value="${usuario.id}"
+                            th:text="${usuario.nome}"></option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="dataDevolucaoPrevista" class="block text-gray-700 font-semibold mb-2">Data de Devolução Prevista</label>
+                <input type="date" id="dataDevolucaoPrevista" name="dataDevolucaoPrevista" required
+                       th:attr="min=${#temporals.format(#temporals.createNow().plusDays(1), 'yyyy-MM-dd')}"
+                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <a th:href="@{/emprestimos/listar}" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Cancelar</a>
+                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Registrar Empréstimo</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

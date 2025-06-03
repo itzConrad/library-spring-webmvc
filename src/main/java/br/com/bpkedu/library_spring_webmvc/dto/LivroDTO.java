@@ -51,16 +51,13 @@ public class LivroDTO {
         this.editora = editora;
     }
 
-    public Livro toLivro(LivroDTO livroDto){
-
-        return new Livro(
-                this.titulo,
-                this.autor,
-                this.anoPublicacao,
-                this.isbn,
-                this.editora
-        );
-
+    public Livro toLivro(LivroDTO livroDTO) {
+        Livro livro = new Livro();
+        livro.setTitulo(this.titulo);
+        livro.setAutor(this.autor);
+        livro.setAnoPublicacao(this.anoPublicacao);
+        livro.setIsbn(this.isbn);
+        livro.setEditora(this.editora);
+        return livro;
     }
-
 }

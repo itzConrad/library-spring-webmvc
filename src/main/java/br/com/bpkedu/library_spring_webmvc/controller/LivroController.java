@@ -22,7 +22,7 @@ public class LivroController {
     @GetMapping("/{id:\\d+}")
     public String detalharLivro(@PathVariable Long id, Model model) {
         model.addAttribute("livro", livroService.buscarPorId(id));
-        return "livros/detalhar";
+        return "livros/detalhes"; // MODIFICADO: de "detalhar" para "detalhes"
     }
 
     @GetMapping("/novo")
@@ -39,21 +39,24 @@ public class LivroController {
 
     @GetMapping("/editar/{id:\\d+}")
     public String formularioEditarLivro(@PathVariable Long id, Model model) {
-        model.addAttribute("livro", livroService.buscarPorId(id));
+        Livro livro = livroService.buscarPorId(id);
+        if (livro == null) {
+            return "redirect:/livros/listar";
+        }
+        model.addAttribute("livro", livro);
         return "livros/editar";
     }
-
-    @PostMapping("/editar/{id}")
-    public String atualizarLivro(@PathVariable Long id, @ModelAttribute Livro livro) {
-        livro.setId(id); // Garante que o ID do livro seja o mesmo da URL
-        livroService.salvar(livro); // Atualiza o livro no banco de dados
-        return "redirect:/livros/listar"; // Redireciona para a listagem de livros
-    }
-
 
     @GetMapping("/deletar/{id:\\d+}")
     public String deletarLivro(@PathVariable Long id) {
         livroService.deletar(id);
+        return "redirect:/livros/listar";
+    }
+
+    @PostMapping("/editar/{id}")
+    public String editarLivro(@PathVariable Long id, @ModelAttribute Livro livro) {
+        livro.setId(id);
+        livroService.salvar(livro);
         return "redirect:/livros/listar";
     }
 }

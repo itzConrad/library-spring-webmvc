@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "usuarios")
 @Getter
 @Setter
-public class Usuario {
+@Table(name = "emprestimo_livro")
+public class EmprestimoItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private String password;
+
+    
 }

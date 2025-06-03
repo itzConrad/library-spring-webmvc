@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LivroService {
@@ -15,8 +16,10 @@ public class LivroService {
 
 
     public List<Livro> listarTodos() {
-        return livroRepository.findAll();
 
+        List<Livro> livros = livroRepository.findAll();
+
+        return livros;
     }
 
     public Livro buscarPorId(Long id) {
@@ -31,5 +34,10 @@ public class LivroService {
         livroRepository.deleteById(id);
     }
 
-
+    // NOVO MÉTODO
+    public List<Livro> listarDisponiveis() {
+        return livroRepository.findAll().stream()
+                .filter(Livro::isDisponivel)
+                .collect(Collectors.toList());
+    }
 }
